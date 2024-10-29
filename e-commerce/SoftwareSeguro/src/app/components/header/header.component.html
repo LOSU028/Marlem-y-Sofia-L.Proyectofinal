@@ -1,0 +1,35 @@
+<header class="site-header">
+    <div class="top-bar">
+        <div class="logo cursor-pointer" routerLink="/">
+            <span>MyShop</span>
+        </div>
+        <div class="searchBar">
+            <input type="text" placeholder="Search..." (keyup.enter)="onSearch($event)"> 
+            <button type="submit"><i class="fas fa-search"></i></button>
+        </div>
+        <div class="profile">
+            @if(authService.isAdmin){
+                <a routerLink="/admin">{{authService.userName}}</a>
+            }@else {
+                <a href="#">{{authService.userName}}</a>
+            }
+            
+            @if(authService.isLoggedIn){
+                <a (click)="logout()" class="cursor-pointer ml-2">Logout</a>
+            }@else {
+                <a routerLink="/login" class="cursor-pointer ml-2">Logout</a>
+                <a routerLink="/register" class="cursor-pointer ml-2">Register</a>
+            }
+        </div>
+    </div>
+    @if(authService.isLoggedIn){
+        <nav class="category-menu">
+            <ul>
+                @for(category of categoryList; track $index){
+                    <li (click)="searchCategory(category._id!)" class="cursor-pointer ml-2"><a>{{category.name}}</a></li>    
+                }
+                
+            </ul>
+        </nav>
+    }
+</header>

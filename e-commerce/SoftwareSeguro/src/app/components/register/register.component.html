@@ -1,0 +1,26 @@
+<div class="flex justify-center w-full mt-10">
+    <div class="bg-white p-8 rounded shadow-md w-6/12 sm:w-96">
+        <h2 class="text-2xl font-bold mb-4">Register</h2>
+        <form [formGroup]="registerForm">
+            <div class="mb-4">
+                <mat-form-field class="w-full">
+                    <label for="name" class="block text-gray-700 font-bold mb-2">Name</label>
+                    <input type="text" formControlName="name" matInput placeholder="your name" required>
+                </mat-form-field>
+            </div>
+            <div class="mb-4">
+                <mat-form-field class="w-full">
+                    <label for="email" class="block text-gray-700 font-bold mb-2">Email:</label>
+                    <input type="text" formControlName="email" matInput placeholder="your name" required>
+                </mat-form-field>
+            </div>
+            <div class="mb-6">
+                <mat-form-field class="w-full">
+                    <label for="password" class="block text-gray-700 font-bold mb-2">Password:</label>
+                    <input type="text" formControlName="password" matInput placeholder="password" required>
+                </mat-form-field>
+            </div>
+            <button mat-raised-button (click)="register()" [disabled]="registerForm.invalid">Register</button>
+        </form>
+    </div>
+</div>
