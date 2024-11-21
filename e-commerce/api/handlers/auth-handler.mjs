@@ -1,4 +1,7 @@
-const User = require("./../db/user");
+import { createRequire } from 'module'
+const require = createRequire(import.meta.url);
+import { jwt_secret } from "../index.mjs";
+const User = require("../db/user");
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 async function registerUser(model){
@@ -25,7 +28,7 @@ async function loginUser(model){
             name:user.name,
             email: user.email,
             isAdmin: user.isAdmin,
-        },process.env.JWT_SECRET.toString(),
+        },jwt_secret.JWT_SECRET.toString(),
         {
             expiresIn:"1h"
         });
@@ -37,4 +40,4 @@ async function loginUser(model){
 }
 
 
-module.exports = {registerUser, loginUser};
+export {registerUser, loginUser};

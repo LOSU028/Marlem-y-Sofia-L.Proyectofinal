@@ -21,6 +21,10 @@ export class CustomerService {
   getCategories(){
     return this.http.get<Product[]>(environment.apiUrl+"/customer/categories")
   }
+
+  getProductById(id:String){
+    return this.http.get<Product>(environment.apiUrl+"/customer/product/"+id);
+  }
 }
 
 

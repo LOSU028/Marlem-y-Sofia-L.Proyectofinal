@@ -4,11 +4,13 @@ import { Category } from '../../types/category';
 import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 import { CustomerService } from '../../services/customer.service';
+import { MatIconModule } from '@angular/material/icon';
+import { ProductService } from '../../services/product.service';
 
 @Component({
   selector: 'app-header',
   standalone: true,
-  imports: [RouterLink],
+  imports: [RouterLink, MatIconModule],
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss'
 })
@@ -17,6 +19,13 @@ export class HeaderComponent {
   categoryList: Category[]=[];
   router = inject(Router);
   authService = inject(AuthService);
+  productNum: number = 0;
+  constructor(private productService: ProductService){
+    productService.productObs.subscribe((product: number) => {
+      this.productNum = product
+      console.log(this.productNum);
+    })
+  }
   ngOnInit(){
     this.customerService.getCategories().subscribe((result) => {
       this.categoryList = result;

@@ -1,5 +1,8 @@
+import { createRequire } from 'module'
+const require = createRequire(import.meta.url);
 const express = require("express");
-const { registerUser, loginUser } = require("../handlers/auth-handler");
+//const { registerUser, loginUser } = require("../handlers/auth-handler.mjs");
+import { registerUser, loginUser } from "../handlers/auth-handler.mjs"
 const router = express.Router();
 
 router.post("/register", async (req,res) => {
@@ -36,4 +39,4 @@ router.post("/login", async (req,res) => {
 
 });
 
-module.exports = router;
+export default router;

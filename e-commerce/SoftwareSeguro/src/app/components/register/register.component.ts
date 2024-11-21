@@ -20,7 +20,7 @@ router = inject(Router);
 registerForm = this.formBuilder.group({
   name: ['',[Validators.required]],
   email:['',[Validators.required, Validators.email]],
-  password:['',[Validators.minLength(5)]]
+  password:['',[Validators.minLength(5),Validators.pattern('(?=.[a-z])(?=.[A-Z])(?=.[0-9])(?=.[$@$!%?&])[A-Za-z\d$@$!%?&].{8,}')]]
 })
 
   register(){

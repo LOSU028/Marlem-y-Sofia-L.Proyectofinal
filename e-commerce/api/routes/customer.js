@@ -1,5 +1,5 @@
 const express = require("express");
-const { getNewProducts, getFeaturedProducts } = require("../handlers/product-handler");
+const { getNewProducts, getFeaturedProducts, getProduct } = require("../handlers/product-handler");
 const { getCategories } = require("../handlers/category-handler");
 const router = express.Router();
 
@@ -18,4 +18,9 @@ router.get("/categories", async (req,res)=>{
     res.send(categories);
 })
 
+router.get("/product/:id", async (req, res) => {
+    const id = req.params["id"];
+    const product = await getProduct(id);
+    res.send(product);
+})
 module.exports = router;

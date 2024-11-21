@@ -1,4 +1,8 @@
+import { createRequire } from 'module'
+const require = createRequire(import.meta.url);
 const jwt = require("jsonwebtoken");
+
+import { jwt_secret } from "../index.mjs";
 
 function verifyToken(req,res,next){
     const token = req.header('Authorization');
@@ -8,7 +12,7 @@ function verifyToken(req,res,next){
         });
     }
     try{
-        const decode = jwt.verify(token, process.env.JWT_SECRET);
+        const decode = jwt.verify(token, jwt_secret.JWT_SECRET);
         req.user = decode;
         next();
     }catch(err){
@@ -29,4 +33,4 @@ function isAdmin(req, res,next){
     }
 }
 
-module.exports = { verifyToken, isAdmin }
+export { verifyToken, isAdmin }

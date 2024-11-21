@@ -1,7 +1,8 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, Output, EventEmitter, inject } from '@angular/core';
 import { Product } from '../../types/product';
 import { MatButtonModule } from '@angular/material/button';
 import { RouterLink } from '@angular/router';
+import { ProductService } from '../../services/product.service';
 @Component({
   selector: 'app-product-card',
   standalone: true,
@@ -11,4 +12,9 @@ import { RouterLink } from '@angular/router';
 })
 export class ProductCardComponent {
 @Input() product!: Product;
+products: number = 0;
+productService = inject(ProductService);
+  addToCart(){
+    this.productService.addCart();
+  }
 }

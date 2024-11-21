@@ -14,6 +14,11 @@
                     <input type="text" formControlName="password" matInput placeholder="password" required>
                 </mat-form-field>
             </div>
+            <div>
+                <re-captcha (resolved)="checkCaptcha($event)"
+                    siteKey="6Ld7coEqAAAAAIV9n_XLK8DIkpTauRBUSb5K-UoA">
+                </re-captcha>
+            </div>
             <button mat-raised-button (click)="login()" [disabled]="loginForm.invalid">Login</button>
         </form>
     </div>
