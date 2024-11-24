@@ -51,4 +51,4 @@ jobs:
            npm install -g snyk
            snyk auth ${{ secrets.SNYK_TOKEN }}
            cd e-commerce
-           snyk test --all-projects --org losu028
+           snyk test --all-projects --org=losu028
