@@ -9,7 +9,7 @@ jobs:
         - uses: actions/checkout@v3
         - uses: actions/setup-node@v3
         - run: |
-            npm install -g @angular/cli - run: ls
+            npm install -g @angular/cli
             cd e-commerce
             cd SoftwareSeguro
             npm install
