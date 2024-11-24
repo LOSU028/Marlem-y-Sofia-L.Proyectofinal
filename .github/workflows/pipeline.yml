@@ -8,13 +8,13 @@ jobs:
     steps:
         - uses: actions/checkout@v3
         - uses: actions/setup-node@v3
-        - run: npm install -g @angular/cli
-        - run: ls
-        - run: cd e-commerce
-        - run: ls
-        - run: cd SoftwareSeguro
-        - run: npm install
-        - run: ng build
+        - run: |
+            npm install -g @angular/cli - run: ls
+            cd e-commerce
+            cd SoftwareSeguro
+            npm install
+            ng build
+       
 
   sonar-cloud:
     runs-on: ubuntu-latest
