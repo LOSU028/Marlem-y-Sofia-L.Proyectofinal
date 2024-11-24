@@ -35,12 +35,18 @@ jobs:
 
   snyk-analysis:
     runs-on: ubuntu-latest
-    needs: build
-    name: Run the SCA scan on the source code
     steps:
-      - uses: actions/checkout@master
-      - name: RunSnyk to check for vulnerabilities
-        uses: snyk/actions/node@master
-        continue-on-error: true
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: Snyk Security Scan
         env:
-          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}  
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+        run: |
+          npm install -g snyk
+          snyk auth ${{ secrets.SNYK_TOKEN }}
+          cd e-commerce
+          snyk test --all-projects
