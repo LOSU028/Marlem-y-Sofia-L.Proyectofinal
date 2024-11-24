@@ -1,0 +1,30 @@
+on:
+  push:
+    branches:
+      - main
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+        - run: npm install -g @angular/cli
+        - run: npm install
+        - run: ng build
+
+  sonar-cloud:
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+    - uses: actions/checkout@v3
+    - uses: actions/setup-node@v3
+      with:
+        node-version: 16
+        cache: npm
+    - run: npm install
+    - name: SonarCloud Scan
+      uses: sonarsource/sonarcloud-github-action@master
+      env:
+        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+      with:
+        args: >
+          -Dsonar.organization=losu028
+          -Dsonar.projectKey=LOSU028_Marlem-y-Sofia-L.Proyectofinal
