@@ -10,6 +10,9 @@ jobs:
         - uses: actions/setup-node@v3
         - run: npm install -g @angular/cli
         - run: ls
+        - run: cd e-commerce
+        - run: ls
+        - run: cd SoftwareSeguro
         - run: npm install
         - run: ng build
 
