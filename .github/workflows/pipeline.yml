@@ -34,18 +34,23 @@ jobs:
             -Dsonar.projectKey=LOSU028_Marlem-y-Sofia-L.Proyectofinal
 
   snyk-analysis:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@master
-      - run: cd e-commerce
-      - name: Run Snyk to check for vulnerabilities
-        uses: snyk/actions/node@master
-        continue-on-error: true
-        env:
-          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
-        with:
-          args: --sarif-file-output=snyk.sarif
-      - name: Upload result to GitHub Code Scanning
-        uses: github/codeql-action/upload-sarif@v2
-        with:
-          sarif_file: snyk.sarif
+     runs-on: ubuntu-latest
+     steps:
+       - name: Checkout code
+         uses: actions/checkout@v4
+       - name: Set up Node.js
+         uses: actions/setup-node@v4
+         continue-on-error: true 
+         with:
+           node-version: '20'
+       - name: Install dependencies
+         run: npm install
+       - name: Snyk Security Scan
+         
+         env:
+           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+         run: |
+           npm install -g snyk
+           snyk auth ${{ secrets.SNYK_TOKEN }}
+           cd e-commerce
+           snyk test --all-projects --org losu028
