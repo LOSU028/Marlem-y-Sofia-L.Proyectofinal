@@ -16,8 +16,7 @@ router.get("", async (req,res) => {
 router.get("/:id", async (req,res) => {
     let id = req.params['id'];
     let result = await getProduct(id);
-    res.setHeader('content-type', 'text/plain');
-    res.send(JSON.stringify({result}));
+    res.send(result);
 })
 
 router.put("/:id", async (req,res)=>{
