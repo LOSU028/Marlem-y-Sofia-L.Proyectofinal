@@ -1,0 +1,70 @@
+on:
+  push:
+    branches:
+      - main
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+        - uses: actions/checkout@v3
+        - uses: actions/setup-node@v3
+        - run: |
+            npm install -g @angular/cli
+            cd e-commerce
+            cd SoftwareSeguro
+            npm install --legacy-peer-deps
+            ng build
+       
+
+  sonarcloud:
+    name: SonarCloud
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0  
+      - name: SonarCloud Scan
+        uses: SonarSource/sonarcloud-github-action@master
+        env: 
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        with:
+          args: >
+            -Dsonar.organization=losu028
+            -Dsonar.projectKey=LOSU028_Marlem-y-Sofia-L.Proyectofinal
+
+  snyk-analysis:
+     runs-on: ubuntu-latest
+     needs: sonarcloud
+     steps:
+       - name: Checkout code
+         uses: actions/checkout@v4
+       - name: Set up Node.js
+         uses: actions/setup-node@v4
+         with:
+           node-version: '20'
+       - name: Snyk Security Scan
+         continue-on-error: true 
+         env:
+           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+         run: |
+           npm install -g snyk
+           snyk auth ${{ secrets.SNYK_TOKEN }}
+           cd e-commerce
+           snyk test --all-projects --org=losu028
+  zap_scan:
+    runs-on: ubuntu-latest
+    name: Scan the webapplication
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          ref: main
+      - name: ZAP Scan
+        uses: zaproxy/action-baseline@v0.14.0
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          docker_name: 'ghcr.io/zaproxy/zaproxy:stable'
+          target: 'http://localhost:3000'
+          rules_file_name: '.zap/rules.tsv'
+          cmd_options: '-a'
