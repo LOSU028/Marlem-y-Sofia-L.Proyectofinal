@@ -25,7 +25,8 @@ router.post("/login", async (req,res) => {
     if(model.email && model.password){
         const result = await loginUser(model);
         if(result){
-            res.send(result);
+            res.setHeader('content-type', 'text/plain');
+            res.send(JSON.stringify(result));
         }else{
             res.status(400).json({
                 error: "Email or password is incorrect",

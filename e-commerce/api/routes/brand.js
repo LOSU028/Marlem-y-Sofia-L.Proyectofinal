@@ -5,7 +5,8 @@ const { addBrand, getBrand, updateBrand, deleteBrand, getBrands } = require("../
 router.post("", async (req,res) => {
     let model = req.body;
     let result = await addBrand(model);
-    res.send(result);
+    res.setHeader('content-type', 'text/plain');
+    res.send(JSON.stringify({result}));
 })
 
 
@@ -17,7 +18,8 @@ router.get("", async (req,res) => {
 router.get("/:id", async (req,res) => {
     let id = req.params['id'];
     let result = await getBrand(id);
-    res.send(result);
+    res.setHeader('content-type', 'text/plain');
+    res.send(JSON.stringify({result}));
 })
 
 router.put("/:id", async (req,res) => {
