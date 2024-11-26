@@ -6,7 +6,8 @@ const { addCategory, updateCategory, deleteCategory, getCategories, getCategoryB
 router.post("", async (req,res) => {
     let model = req.body;
     let result = await addCategory(model);
-    res.send(result);
+    res.setHeader('content-type', 'text/plain');
+    res.send(JSON.stringify({result}));
 })
 
 router.get("", async (req,res) => {
@@ -18,7 +19,8 @@ router.get("", async (req,res) => {
 router.get("/:id", async (req,res) => {
     let id = req.params['id'];
     let result = await getCategoryById(id);
-    res.send(result);
+    res.setHeader('content-type', 'text/plain');
+    res.send(JSON.stringify({result}));
 })
 
 router.put("/:id", async (req,res) => {

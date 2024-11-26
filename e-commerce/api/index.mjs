@@ -66,7 +66,11 @@ try {
 
 const db_secret = JSON.parse(response.SecretString);
 const jwt_secret = JSON.parse(jwt_response.SecretString);
-app.use(cors());
+const corsOptions = {
+  origin: 'http://ssecommerce.s3-website-us-east-1.amazonaws.com',
+  optionsSuccessStatus: 200,
+};
+app.use(cors(corsOptions));
 app.use(express.json());
 app.get("/",(req,res)=>{
     res.send("Server running")
